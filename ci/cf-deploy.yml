@@ -1,0 +1,67 @@
+resource_types:
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+
+resources:
+- name: cf-deployment
+  type: git
+  source:
+    uri: https://github.com/cloudfoundry/cf-deployment
+    branch: master
+
+- name: stemcell
+  type: bosh-io-stemcell
+  source:
+    name: bosh-warden-boshlite-((stemcell_type))-go_agent
+    version_family: ((stemcell_version))
+
+- name: local-cf
+  type: bosh-deployment
+  source:
+    deployment: cf
+    target: https://192.168.50.6:25555
+    client: ((bosh_client))
+    client_secret: ((bosh_client_secret))
+    ca_cert: ((bosh_ca_cert))
+
+jobs:
+- name: deploy-cf
+  plan:
+  - get: cf-deployment
+  - get: stemcell
+  - task: update-cloud-config
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: paymentshubrebels/bosh-utils
+          tag: 'latest'
+      params:
+        BOSH_ENVIRONMENT: https://192.168.50.6:25555
+        BOSH_CA_CERT: ((bosh_ca_cert))
+        BOSH_CLIENT:  ((bosh_client))
+        BOSH_CLIENT_SECRET: ((bosh_client_secret))
+        CLOUD_CONFIG_PATH: cf-deployment/iaas-support/bosh-lite/cloud-config.yml
+      inputs:
+      - name: cf-deployment
+      run:
+        path: /bin/bash
+        args:
+          - -ec
+          - |
+            bosh --non-interactive update-cloud-config "$CLOUD_CONFIG_PATH"
+
+  - put: local-cf
+    params:
+      manifest: cf-deployment/cf-deployment.yml
+      stemcells:
+      - stemcell/*.tgz
+      vars:
+        system_domain: bosh-lite.com
+      ops_files:
+      - cf-deployment/operations/bosh-lite.yml
+      - cf-deployment/operations/scale-to-one-az.yml
+      - cf-deployment/operations/use-compiled-releases.yml
