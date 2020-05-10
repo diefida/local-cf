@@ -100,7 +100,7 @@ You should be able to run `curl api.bosh-lite.com` and receive a JSON like this:
 [`bucc`]: https://github.com/starkandwayne/bucc
 [`cf`]: https://github.com/cloudfoundry/cf-deployment
 [`yq`]: https://github.com/mikefarah/yq
-[VirtualBox]: https://www.virtualbox.org/. 
-[nozzles]: 'https://docs.cloudfoundry.org/loggregator/log-ops-guide.html#scaling-nozzles'
-[service brokers]: 'https://docs.cloudfoundry.org/services/overview.html'
+[VirtualBox]: https://www.virtualbox.org/
+[nozzles]: https://docs.cloudfoundry.org/loggregator/log-ops-guide.html#scaling-nozzles
+[service brokers]: https://docs.cloudfoundry.org/services/overview.html
 [local Concourse]: https://192.168.50.6:4443
