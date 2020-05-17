@@ -26,7 +26,7 @@ This script is using:
 1. When this pipeline finish, you will have a working CF deployment in local!
 
 ## Further tips
-- For tearing down this environment, go inside bucc dir (`cd bucc`) and run `bucc down`.
+- For tearing down this environment, go inside bucc dir (`cd bucc`) and run `bucc down`. If you aren't using [`direnv`], you will need to run `source .envrc` first.
 - This CF deployment is using bosh-lite.com as system domain. This domain is registered on the internet as an A Record to 10.244.0.34. This private IP is the internal one for the gorouters. For being able to reach it, you need to add some routes to your OS routing table:
 ```
 
@@ -107,3 +107,4 @@ You should be able to run `curl api.bosh-lite.com` and receive a JSON like this:
 [nozzles]: https://docs.cloudfoundry.org/loggregator/log-ops-guide.html#scaling-nozzles
 [service brokers]: https://docs.cloudfoundry.org/services/overview.html
 [local Concourse]: https://192.168.50.6:4443
+[`direnv`]: https://github.com/direnv/direnv/blob/master/docs/installation.md
