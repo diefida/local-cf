@@ -13,7 +13,10 @@ This can be useful for:
 This script is using:
 - `git`, for cloning [`bucc`] and [`cf`] repos from Github
 - [`yq`], for modifying [`bucc`] config
-- [VirtualBox], [`bucc`] uses it for deploying Bosh, UAA, Credhub and Concourse inside a VM. I've run this succesfully using version `5.2.0` on top of Debian 9.12.
+- [VirtualBox], [`bucc`] uses it for deploying Bosh, UAA, Credhub and Concourse inside a VM. I've run this succesfully using version `6.0.0` on top of Debian 10.4.
+
+### Update
+- [VirtualBox] 6.1.0 does not work. [More information](https://github.com/cloudfoundry/bosh-deployment/issues/378)
 
 ## Usage
 1. Clone this project `git clone https://github.com/diefida/local-cf`
